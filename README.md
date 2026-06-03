@@ -4,7 +4,7 @@
 
 ## Prosjektbeskrivelse
 
-Jeg skal lage et 3D spill i Godot 4 der spilleren sniker seg inn i et hus.  
+Jeg skal lage et 3D spill i Godot 4.6 der spilleren sniker seg inn i et hus.  
 Hovedfokuset på eksamensdagen er å implementere et egenutviklet pathfinding-system til en AI-fiende, slik at den beveger seg naturlig rundt vegger og hindringer.
 
 Jeg har allerede laget grunnleggende spillerbevegelse og en fiende fra forberedelsestiden.  
@@ -14,7 +14,7 @@ Prosjektet er versjonskontrollert med Git og hostet på GitHub under **MAZE_Deve
 
 ## Teknologier
 
-- **Godot 4** – spillmotor
+- **Godot 4.6** – spillmotor
 - **GDScript** – programmeringsspråk
 - **Egenutviklet pathfinding (A\*)** – rutefinding uten innebygde systemer
 - **MAZE_Development Workspace** – egenutviklet prosjektplattform (maze-development.com/workspace) med Kanban, versjonskontroll og GitHub-integrasjon
@@ -58,7 +58,7 @@ En ekte server som kjører en databasetjeneste – dette er reell drift, ikke ba
 ## Hva jeg skal si til sensor (stikkord)
 
 ### Hva
-- 3D snike-spill i Godot 4
+- 3D snike-spill i Godot 4.6
 - Spilleren sniker seg inn i et hus
 - AI-fiende med egenutviklet pathfinding
 - MAZE_Development Workspace – egenutviklet prosjektplattform med Kanban og GitHub-sync
