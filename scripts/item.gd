@@ -8,5 +8,8 @@ extends RigidBody3D
 func _ready() -> void:
 	add_to_group("thrown_item")
 
+func can_pick_up() -> bool:
+	return true
+
 func interact(_from: Vector3, _crouch: bool = false) -> void:
 	pass

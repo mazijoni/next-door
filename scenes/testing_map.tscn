@@ -6,7 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cs2s66sxkoe2t" path="res://scenes/neighbor_house.tscn" id="4_3pgql"]
 [ext_resource type="PackedScene" uid="uid://bqtx7nm2pk4ej" path="res://scenes/item.tscn" id="5_j6fbd"]
 [ext_resource type="Texture2D" uid="uid://byrbreoc1xaiq" path="res://icon.svg" id="6_ihksf"]
-[ext_resource type="PackedScene" uid="uid://enemy1scene2" path="res://scenes/enemy.tscn" id="7_j6fbd"]
+[ext_resource type="PackedScene" uid="uid://b8nbhfbllisuk" path="res://scenes/chair.tscn" id="7_4b0xu"]
+[ext_resource type="Texture2D" uid="uid://bpcdps7l8hhth" path="res://assets/textures/placeholder/Red/texture_11.png" id="8_r1hi5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8a2hj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -49,9 +50,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.740121, 0.580126, 9.762176
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.643284, 0.5, 2.136034)
 
 [node name="Item" parent="." unique_id=282645218 instance=ExtResource("5_j6fbd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9693363, 0.6945112, 5.049936)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2806637, 1.4445112, -0.7000642)
 icon = ExtResource("6_ihksf")
 can_trip_enemy = true
 
-[node name="Enemy" parent="." unique_id=228582446 instance=ExtResource("7_j6fbd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.583179, 0.5697937, -0.009904861)
+[node name="Chair" parent="." unique_id=775484169 instance=ExtResource("7_4b0xu")]
+transform = Transform3D(-3.7855173e-08, 0.5, -0.8660254, 2.1855694e-08, 0.8660254, 0.5, 1, 0, -4.371139e-08, -2.8392143, 0.6411718, -3.6000476)
+collision_mask = 1
+brake = 3
+item_name = "chair"
+icon = ExtResource("8_r1hi5")
+can_trip_enemy = true
+
+[node name="Chair2" parent="." unique_id=1260187156 instance=ExtResource("7_4b0xu")]
+transform = Transform3D(0.8660253, 0, -0.49999997, 0, 1, 0, 0.49999997, 0, 0.8660253, 4.9199486, 0.7713082, -2.7477827)
+collision_mask = 1
+brake = 3
+item_name = "chair"
+icon = ExtResource("8_r1hi5")
+can_trip_enemy = true

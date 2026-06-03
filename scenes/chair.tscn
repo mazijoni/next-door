@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://b8nbhfbllisuk"]
+
+[ext_resource type="Script" uid="uid://2opi4i5y5lht" path="res://scripts/chair.gd" id="1_chair"]
+[ext_resource type="Material" uid="uid://bas0i8unmo2sn" path="res://Material/white/white_grid.tres" id="2_hxd06"]
+[ext_resource type="Material" uid="uid://xse2pqn8dres" path="res://Material/black/black_grid.tres" id="3_dhd05"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_seat"]
+size = Vector3(0.5, 0.05, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_back"]
+size = Vector3(0.5, 0.5, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_leg"]
+size = Vector3(0.05, 0.45, 0.05)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_col"]
+size = Vector3(0.5, 0.95, 0.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_area"]
+radius = 0.5482051
+
+[node name="Chair" type="RigidBody3D" unique_id=775484169]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_chair")
+
+[node name="Seat" type="MeshInstance3D" parent="." unique_id=270428284]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+material_override = ExtResource("2_hxd06")
+mesh = SubResource("BoxMesh_seat")
+
+[node name="Back" type="MeshInstance3D" parent="." unique_id=2003247631]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, -0.225)
+material_override = ExtResource("2_hxd06")
+mesh = SubResource("BoxMesh_back")
+
+[node name="LegFL" type="MeshInstance3D" parent="." unique_id=2018145142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.225, 0.2)
+material_override = ExtResource("3_dhd05")
+mesh = SubResource("BoxMesh_leg")
+
+[node name="LegFR" type="MeshInstance3D" parent="." unique_id=1411992805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.225, 0.2)
+material_override = ExtResource("3_dhd05")
+mesh = SubResource("BoxMesh_leg")
+
+[node name="LegBL" type="MeshInstance3D" parent="." unique_id=2139546748]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.225, -0.2)
+material_override = ExtResource("3_dhd05")
+mesh = SubResource("BoxMesh_leg")
+
+[node name="LegBR" type="MeshInstance3D" parent="." unique_id=2015769104]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.225, -0.2)
+material_override = ExtResource("3_dhd05")
+mesh = SubResource("BoxMesh_leg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1117682632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475, 0)
+shape = SubResource("BoxShape3D_col")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=885815295]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=111381217]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43507937, 0)
+shape = SubResource("SphereShape3D_area")

@@ -98,6 +98,8 @@ func _pick_up_item(item: Item) -> void:
 	item.collision_mask = 0
 	var area := item.get_node_or_null("Area3D") as Area3D
 	if area:
+		area.collision_layer = 0
+		area.collision_mask = 0
 		area.monitoring = false
 		area.monitorable = false
 	item.get_parent().remove_child(item)
@@ -158,7 +160,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif not _transitioning and _aimed_interactable is HidingSpot:
 			_start_hiding(_aimed_interactable as HidingSpot)
 		elif not _hiding_spot and not _transitioning and _aimed_interactable is Item:
-			_pick_up_item(_aimed_interactable as Item)
+			var item := _aimed_interactable as Item
+			if not item.can_pick_up():
+				item.interact(global_position, Input.is_action_pressed("sneak"))
+			if item.can_pick_up():
+				_pick_up_item(item)
 		elif not _hiding_spot and not _transitioning and _aimed_interactable != null:
 			_aimed_interactable.interact(global_position, Input.is_action_pressed("sneak"))
 
@@ -169,7 +175,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			_update_held_item()
 
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			if not _transitioning and not _hiding_spot:
+				var sel: Item = _inventory[_selected_slot] if _selected_slot < _inventory.size() else null
+				if sel is Chair and _aimed_interactable != null and _aimed_interactable.has_method("set_locked") and not _aimed_interactable.get("locked") and _aimed_interactable.call("can_be_locked"):
+					_place_chair_against_door(sel as Chair, _aimed_interactable)
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.pressed:
 				if not _transitioning and not _hiding_spot:
 					_rmb_pressed = true
@@ -181,11 +192,11 @@ func _unhandled_input(event: InputEvent) -> void:
 						_throw_item()
 					else:
 						_drop_item()
-		elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
+		elif event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			_selected_slot = (_selected_slot - 1 + SLOT_COUNT) % SLOT_COUNT
 			_update_inventory_hud()
 			_update_held_item()
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			_selected_slot = (_selected_slot + 1) % SLOT_COUNT
 			_update_inventory_hud()
 			_update_held_item()
@@ -289,7 +300,7 @@ func _do_respawn() -> void:
 	_climbing = false
 	_rmb_pressed = false
 	collision_layer = 1
-	collision_mask = 1
+	collision_mask = 3
 	velocity = Vector3.ZERO
 	global_position = _spawn_position
 
@@ -299,12 +310,14 @@ func _drop_item() -> void:
 	var item: Item = _inventory[_selected_slot]
 	_hand.remove_child(item)
 	get_tree().current_scene.add_child(item)
-	item.global_position = global_position + Vector3.UP * 1.0
+	item.global_position = global_position + Vector3.UP * 1.0 + (-transform.basis.z) * 0.8
 	item.freeze = false
 	item.collision_layer = 2
-	item.collision_mask = 1
+	item.collision_mask = 3
 	var area := item.get_node_or_null("Area3D") as Area3D
 	if area:
+		area.collision_layer = 1
+		area.collision_mask = 0
 		area.monitoring = true
 		area.monitorable = true
 	item.linear_velocity = Vector3.ZERO
@@ -312,6 +325,52 @@ func _drop_item() -> void:
 	_selected_slot = clamp(_selected_slot, 0, max(0, _inventory.size() - 1))
 	_update_inventory_hud()
 	_update_held_item()
+
+func _place_chair_against_door(chair: Chair, door: Node3D) -> void:
+	_hand.remove_child(chair)
+	get_tree().current_scene.add_child(chair)
+
+	# Use the door's actual surface normal so the chair faces square to the door
+	# regardless of where the player is standing relative to the hinge.
+	var door_normal := door.global_transform.basis.z
+	if (global_position - door.global_position).dot(door_normal) < 0.0:
+		door_normal = -door_normal
+	door_normal.y = 0.0
+	door_normal = door_normal.normalized()
+
+	# For double doors place the chair between the two handles; otherwise at this door's handle.
+	var handle_world: Vector3
+	var partner: Node3D = door.call("get_partner")
+	if partner:
+		var handle_a := door.global_transform * Vector3(0.84, 0.0, 0.0)
+		var handle_b := partner.global_transform * Vector3(0.84, 0.0, 0.0)
+		handle_world = (handle_a + handle_b) * 0.5
+	else:
+		handle_world = door.global_transform * Vector3(0.84, 0.0, 0.0)
+	handle_world.y = global_position.y
+
+	# Offset toward the hinge using the door's own X axis — consistent from both sides.
+	var toward_hinge := -door.global_transform.basis.x.normalized()
+	var chair_pos := handle_world + door_normal * 0.6 + toward_hinge * 0.2
+	chair.global_position = chair_pos
+	chair.rotation = Vector3(deg_to_rad(-20.0), atan2(door_normal.x, door_normal.z), 0.0)
+
+	chair.freeze = true
+	chair.freeze_mode = RigidBody3D.FREEZE_MODE_STATIC
+	chair.collision_layer = 2
+	chair.collision_mask = 3
+	var area := chair.get_node_or_null("Area3D") as Area3D
+	if area:
+		area.collision_layer = 1
+		area.collision_mask = 0
+		area.monitoring = true
+		area.monitorable = true
+
+	_inventory.remove_at(_selected_slot)
+	_selected_slot = clamp(_selected_slot, 0, max(0, _inventory.size() - 1))
+	_update_inventory_hud()
+	_update_held_item()
+	chair.place_against_door(door)
 
 func _throw_item() -> void:
 	if _selected_slot >= _inventory.size():
@@ -322,9 +381,11 @@ func _throw_item() -> void:
 	item.global_position = _camera.global_position + (-_camera.global_transform.basis.z) * 0.5
 	item.freeze = false
 	item.collision_layer = 2
-	item.collision_mask = 1
+	item.collision_mask = 3
 	var area := item.get_node_or_null("Area3D") as Area3D
 	if area:
+		area.collision_layer = 1
+		area.collision_mask = 0
 		area.monitoring = true
 		area.monitorable = true
 	item.linear_velocity = -_camera.global_transform.basis.z * THROW_SPEED
