@@ -1,9 +1,4 @@
-# Eksamensplan – IKT2004 Tverrfaglig praktisk eksamen
-
-**Elev:** Maze – MAZE_Development  
-**Skole:** Kuben videregående skole  
-**Fag:** Informasjonsteknologi, IKT2004  
-**Eksamenstid:** 5 timer
+# Eksamensplan
 
 ---
 
@@ -22,7 +17,7 @@ Prosjektet er versjonskontrollert med Git og hostet på GitHub under **MAZE_Deve
 - **Godot 4** – spillmotor
 - **GDScript** – programmeringsspråk
 - **Egenutviklet pathfinding (A\*)** – rutefinding uten innebygde systemer
-- **Git / GitHub** – versjonskontroll og kodelagring
+- **MAZE_Development Workspace** – egenutviklet prosjektplattform (maze-development.com/workspace) med Kanban, versjonskontroll og GitHub-integrasjon
 - **MySQL** – database for bruker og progress
 - **Raspberry Pi** – server som hoster MySQL-databasen
 
@@ -43,9 +38,9 @@ Godots innebygde system er en black box – jeg kan ikke forklare hva som skjer 
 ### 2. Fiendeatferd
 Koble pathfindingen til fiendeatferd – fienden patruljerer eller jager spilleren basert på posisjon og synsfelt.
 
-### 3. Versjonskontroll med Git / GitHub
-Committe kode underveis på eksamensdagen til GitHub-repoet under MAZE_Development.  
-Viser arbeidsprosess og gir backup av koden.
+### 3. Versjonskontroll med MAZE_Development Workspace
+Bruke MAZE_Development Workspace (maze-development.com/workspace) til å administrere prosjektet – Kanban-board for oppgaver, GitHub-integrasjon for commits, og prosjektoversikt.  
+Committe kode underveis på eksamensdagen. Viser arbeidsprosess og gir backup.
 
 ### 4. MySQL-database på Raspberry Pi *(hvis tid)*
 Sette opp MySQL på en Raspberry Pi som kjører som lokal server.  
@@ -66,20 +61,20 @@ En ekte server som kjører en databasetjeneste – dette er reell drift, ikke ba
 - 3D snike-spill i Godot 4
 - Spilleren sniker seg inn i et hus
 - AI-fiende med egenutviklet pathfinding
-- Versjonskontroll med Git / GitHub
+- MAZE_Development Workspace – egenutviklet prosjektplattform med Kanban og GitHub-sync
 - MySQL-database på Raspberry Pi
 
 ### Hvordan
 - A* algoritme – grid over banen, open/closed list, heuristikk
 - Fienden oppdaterer path hvert sekund eller ved bevegelse
-- Git commit underveis – viser arbeidsprosess
+- MAZE_Development Workspace med Kanban-board – tracker oppgaver og committer til GitHub underveis
 - MySQL tabeller: users, progress
 - Godot kobler til databasen via HTTP eller direkte
 
 ### Hvorfor
 - A* fordi det er raskere enn BFS og gir optimal vei
 - Eget system fordi jeg lærer mer og kan forklare hvert steg
-- Git fordi profesjonell arbeidsflyt og backup
+- MAZE_Development Workspace fordi det er en profesjonell arbeidsflyt – Kanban, GitHub-sync, prosjektoversikt
 - Raspberry Pi fordi det er en ekte driftsoppgave – ikke bare lokalt
 
 ### Alternativer jeg vurderte
@@ -99,7 +94,7 @@ En ekte server som kjører en databasetjeneste – dette er reell drift, ikke ba
 | Kjerneelement | Hvordan jeg dekker det |
 |---|---|
 | Løsningsarkitektur og systemutvikling | Spillarkitektur, A* pathfinding, database-tilkobling |
-| Utviklingsprosesser og kreativ problemløsning | Egenutviklet A*, Git workflow, feilsøking underveis |
+| Utviklingsprosesser og kreativ problemløsning | Egenutviklet A*, MAZE_Development Workspace (Kanban + GitHub), feilsøking underveis |
 | IT-støtte og kommunikasjon | Spillet gir spilleren tydelig feedback og brukeropplevelse |
 | Driftstøtte | MySQL på Raspberry Pi – setter opp og konfigurerer en databasetjeneste |
 | Etikk, lovverk og yrkesutøvelse | Personvern, GDPR, sikker lagring av brukerdata |
