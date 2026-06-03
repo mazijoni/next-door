@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://dbn7eyjjymttx"]
+
+[ext_resource type="Material" uid="uid://0v7qw6er6p1o" path="res://Material/purple/purple_grid.tres" id="1_xr4xt"]
+[ext_resource type="PackedScene" uid="uid://bjpkgo6v3ru4l" path="res://scenes/hiding_spot.tscn" id="2_54rbh"]
+
+[node name="cabinet" type="Node3D" unique_id=1750800775]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1638860075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 1.125, -0.125)
+use_collision = true
+size = Vector3(0.25, 2.25, 0.75)
+material = ExtResource("1_xr4xt")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=162632411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, -0.125)
+use_collision = true
+size = Vector3(1, 0.25, 0.75)
+material = ExtResource("1_xr4xt")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="." unique_id=179724895]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.125, -0.125)
+use_collision = true
+size = Vector3(1, 0.25, 0.75)
+material = ExtResource("1_xr4xt")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=2067447357]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.125, -0.625)
+use_collision = true
+size = Vector3(1.5, 2.25, 0.25)
+material = ExtResource("1_xr4xt")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=23640615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 1.125, -0.125)
+use_collision = true
+size = Vector3(0.25, 2.25, 0.75)
+material = ExtResource("1_xr4xt")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=2140456617]
+transform = Transform3D(0.25881907, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.25881907, -0.40875146, 1.125, 0.13022107)
+use_collision = true
+size = Vector3(0.17184448, 2.25, 0.6875)
+material = ExtResource("1_xr4xt")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="." unique_id=1287216514]
+transform = Transform3D(-0.25881898, 0, 0.96592575, 0, 1, 0, -0.96592575, 0, -0.25881898, 0.43745643, 1.125, 0.17980945)
+use_collision = true
+size = Vector3(0.12939453, 2.25, 0.65771484)
+material = ExtResource("1_xr4xt")
+
+[node name="HidingSpot3" parent="." unique_id=1526718387 instance=ExtResource("2_54rbh")]
+transform = Transform3D(-1.405, 0, 1.08841355e-07, 0, 1.975, 0, -1.22829e-07, 0, -1.2449999, 0, 0.25, -0.25)

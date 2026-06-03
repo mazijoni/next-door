@@ -1,0 +1,165 @@
+[gd_scene format=3 uid="uid://cst5njkpm4b32"]
+
+[ext_resource type="Script" uid="uid://gasmlklfp6o3" path="res://scripts/player.gd" id="1_script"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
+radius = 0.35
+height = 1.8
+
+[node name="Player" type="CharacterBody3D" unique_id=304698941]
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=863950829]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_1")
+debug_color = Color(0, 0.6, 0.69803923, 1)
+
+[node name="CeilingRay" type="RayCast3D" parent="." unique_id=112233445]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, 0.85, 0)
+
+[node name="Head" type="Node3D" parent="." unique_id=1069605550]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=915281249]
+
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D" unique_id=625186065]
+target_position = Vector3(0, 0, -2.25)
+
+[node name="HandPosition" type="Node3D" parent="Head/Camera3D" unique_id=444444444]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.3, -0.5)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1882750386]
+
+[node name="CrossH" type="ColorRect" parent="HUD" unique_id=2023137464]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -1.0
+offset_right = 8.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CrossV" type="ColorRect" parent="HUD" unique_id=1779195544]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -8.0
+offset_right = 1.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InventoryBar" type="HBoxContainer" parent="HUD" unique_id=111111111]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -134.0
+offset_top = -80.0
+offset_right = 134.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Slot0" type="Panel" parent="HUD/InventoryBar" unique_id=222222220]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot0" unique_id=333333330]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Slot1" type="Panel" parent="HUD/InventoryBar" unique_id=222222221]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot1" unique_id=333333331]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Slot2" type="Panel" parent="HUD/InventoryBar" unique_id=222222222]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot2" unique_id=333333332]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Slot3" type="Panel" parent="HUD/InventoryBar" unique_id=222222223]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot3" unique_id=333333333]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="DeathScreen" type="CanvasLayer" parent="." unique_id=555555550]
+layer = 10
+visible = false
+
+[node name="Overlay" type="ColorRect" parent="DeathScreen" unique_id=555555551]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="Label" type="Label" parent="DeathScreen" unique_id=555555552]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -40.0
+offset_right = 150.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "YOU DIED"
+horizontal_alignment = 1
+vertical_alignment = 1

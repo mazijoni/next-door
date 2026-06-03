@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bjpkgo6v3ru4l"]
+
+[ext_resource type="Script" uid="uid://4mvl8vd07bqw" path="res://scripts/hiding_spot.gd" id="1_script"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_1"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.2, 0.5, 1, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hh4n7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+resource_local_to_scene = true
+
+[node name="HidingSpot" type="Node3D" unique_id=1526718387]
+script = ExtResource("1_script")
+
+[node name="HidePosition" type="Marker3D" parent="." unique_id=809288709]
+
+[node name="Preview" type="MeshInstance3D" parent="." unique_id=732715626]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("Mat_1")
+mesh = SubResource("BoxMesh_hh4n7")
+
+[node name="Area" type="Area3D" parent="." unique_id=950548011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area" unique_id=1189434491]
+shape = SubResource("BoxShape3D_1")

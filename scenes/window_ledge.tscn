@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://dw1nd0wledge5"]
+
+[ext_resource type="Script" uid="uid://csmtlnftwtiym" path="res://scripts/window_ledge.gd" id="1_script"]
+
+[sub_resource type="StandardMaterial3D" id="Material_glass"]
+transparency = 1
+albedo_color = Color(0.7, 0.9, 1, 0.35)
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_glass"]
+material = SubResource("Material_glass")
+size = Vector3(0.85, 1.5, 0.04)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_glass"]
+size = Vector3(0.85, 1.5, 0.04)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_detector"]
+size = Vector3(0.9, 1.55, 0.2)
+
+[node name="WindowLedge" type="Node3D" unique_id=1812033580]
+script = ExtResource("1_script")
+
+[node name="Glass" type="Node3D" parent="." unique_id=1546945606]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
+
+[node name="GlassMesh" type="MeshInstance3D" parent="Glass" unique_id=925077635]
+mesh = SubResource("BoxMesh_glass")
+
+[node name="GlassBody" type="StaticBody3D" parent="Glass" unique_id=1005027872]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Glass/GlassBody" unique_id=1297072811]
+shape = SubResource("BoxShape3D_glass")
+
+[node name="BreakDetector" type="Area3D" parent="Glass" unique_id=1383852737]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Glass/BreakDetector" unique_id=700739136]
+shape = SubResource("BoxShape3D_detector")
+
+[node name="LedgeTop" type="Marker3D" parent="." unique_id=1907489671]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+
+[node name="ClimbExit" type="Marker3D" parent="." unique_id=1457804551]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.31928444, -0.6933512)

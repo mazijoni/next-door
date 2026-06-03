@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://b0l7qhj00t2ty"]
+
+[ext_resource type="Material" uid="uid://b6qw8mj26a7ly" path="res://Material/green/green_grid.tres" id="1_3pcl8"]
+[ext_resource type="PackedScene" uid="uid://cst5njkpm4b32" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="Material" uid="uid://xse2pqn8dres" path="res://Material/black/black_grid.tres" id="2_ruwl7"]
+[ext_resource type="PackedScene" uid="uid://cs2s66sxkoe2t" path="res://scenes/neighbor_house.tscn" id="4_3pgql"]
+[ext_resource type="PackedScene" uid="uid://bqtx7nm2pk4ej" path="res://scenes/item.tscn" id="5_j6fbd"]
+[ext_resource type="Texture2D" uid="uid://byrbreoc1xaiq" path="res://icon.svg" id="6_ihksf"]
+[ext_resource type="PackedScene" uid="uid://enemy1scene2" path="res://scenes/enemy.tscn" id="7_j6fbd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8a2hj"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ruwl7"]
+sky_material = SubResource("ProceduralSkyMaterial_8a2hj")
+
+[sub_resource type="Environment" id="Environment_3pgql"]
+background_mode = 2
+sky = SubResource("Sky_ruwl7")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="testing_map" type="Node3D" unique_id=130194122]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=353545776]
+environment = SubResource("Environment_3pgql")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=471921223]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=176416455]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -7.3333335, 0, 11.333334)
+use_collision = true
+size = Vector3(89, 1, 87)
+material = ExtResource("1_3pcl8")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1180651654]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -7.3333335, 0.069793224, 11.333334)
+use_collision = true
+size = Vector3(9, 1, 87)
+material = ExtResource("2_ruwl7")
+
+[node name="Player" parent="." unique_id=1231638297 instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.740121, 0.580126, 9.762176)
+
+[node name="neighbor_house" parent="." unique_id=1188118122 instance=ExtResource("4_3pgql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.643284, 0.5, 2.136034)
+
+[node name="Item" parent="." unique_id=282645218 instance=ExtResource("5_j6fbd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9693363, 0.6945112, 5.049936)
+icon = ExtResource("6_ihksf")
+can_trip_enemy = true
+
+[node name="Enemy" parent="." unique_id=228582446 instance=ExtResource("7_j6fbd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.583179, 0.5697937, -0.009904861)
