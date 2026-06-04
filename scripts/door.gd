@@ -25,10 +25,10 @@ func _ready() -> void:
 		rotation.y = initial_y + deg_to_rad(CRACK_ANGLE * open_side)
 
 func can_be_locked() -> bool:
-	if state == State.CRACKED:
+	if state == State.CRACKED or state == State.OPEN:
 		return false
 	var p := get_partner()
-	if p and p.get("state") == State.CRACKED:
+	if p and (p.get("state") == State.CRACKED or p.get("state") == State.OPEN):
 		return false
 	return true
 
