@@ -51,8 +51,9 @@ Den nåværende løsningen er ikke intelligent – fienden setter seg fast i veg
 
 ### 2. Fiendeatferd
 
-Koble pathfindingen til fiendeatferd – fienden patruljerer eller jager spilleren basert på posisjon og synsfelt.
-- [ ] TODO: Hva mener du med fiendeadferd? Noen setninger mer utfyllende om logikken som skal brukes. 
+- [x] TODO: Hva mener du med fiendeadferd? Noen setninger mer utfyllende om logikken som skal brukes.
+
+Fienden vet alltid hvor spilleren er og jager dem kontinuerlig. Hvert sekund henter fienden spillerens posisjon og beregner en ny path via A*. Fienden har ingen synsvinkel eller skjul – den er alltid i jakt-modus. Dette er den enkleste formen for fiendeatferd, og gjør det mulig å fokusere på selve pathfinding-implementasjonen.
 
 ### 3. Versjonskontroll med MAZE_Development Workspace
 
@@ -62,43 +63,28 @@ Kode committes underveis på eksamensdagen – dette viser arbeidsprosessen og g
 
 ### 4. MySQL-database på Raspberry Pi
 
-- [ ] TODO: Du MÅ få tid til å sette opp database, og tabellene. Det er en del av drifts-delen. Integreringen kan du sette på som HVIS TID
+- [x] TODO: Du MÅ få tid til å sette opp database, og tabellene. Det er en del av drifts-delen. Integreringen kan du sette på som HVIS TID
 
 Sette opp MySQL på en Raspberry Pi som kjører som lokal server.
 Lage tabeller for å lagre brukerdata og spillprogress.
 
-- Tabell skal lagre bruker for senere innlogging. Passord skal hashes i database, slik at selv om databasen hackes, kan ikke passord leses.
+Tabell skal lagre bruker for senere innlogging. Passord skal hashes i database, slik at selv om databasen hackes, kan ikke passord leses.
 
 **Om hashing av passord:**
 Passord skal aldri lagres i klartekst i en database. Istedenfor brukes en hashing-algoritme som gjør passordet om til en fast streng med tegn som ikke kan reverseres tilbake til det originale passordet. Selv om databasen blir hacket, kan angriperen ikke lese passordene.
 
-- [ ] TODO: Teksten under virker kopiert. Vet du hva SALT er? Isåfall noter et par stikkord på hva det er så du kan svare
+- [x] TODO: Teksten under virker kopiert. Vet du hva SALT er? Isåfall noter et par stikkord på hva det er så du kan svare
 
-Jeg bruker bcrypt – en anerkjent hashing-algoritme designet spesielt for passord. bcrypt legger til en tilfeldig "salt" for hvert passord før hashing, slik at to like passord aldri får samme hash. Dette beskytter mot rainbow table-angrep (forhåndsberegnede lister med vanlige passord og deres hashes).
-
-- [ ] TODO: Sjekk hvordan du oppretter tabell. Bør vel ikke stå slik som dette. Kan du ikke slette det hvis du har sjekket det ut, og vet hvordan du gjør det?
-
-```sql
-CREATE TABLE users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(256),
-  password_hashed VARCHAR(256),
-  lastlogin TIMESTAMP
-);
-
-CREATE TABLE progress (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  level INT,
-  score INT,
-  saved_at TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
-```
+**Hva er salt:**
+Salt er en tilfeldig streng med tegn som legges til passordet *før* det hashes. Poenget er at to brukere med samme passord får helt forskjellige hashes i databasen, fordi saltet er unikt for hver bruker. Salt beskytter mot rainbow table-angrep – en angriper kan ikke bruke en ferdiglagd liste over vanlige passord fordi saltet gjør hver hash unik. bcrypt håndterer salt automatisk og lagrer det som en del av den ferdige hashen.
 
 **Tabeller:**
 - `users` – brukernavn og hashet passord for innlogging
 - `progress` – bruker-ID, nivå, poeng og tidspunkt for siste lagring
+
+- [x] TODO: Sjekk hvordan du oppretter tabell. Bør vel ikke stå slik som dette. Kan du ikke slette det hvis du har sjekket det ut, og vet hvordan du gjør det?
+
+Jeg har sett på SQL-syntaksen og vet hvordan tabeller opprettes med CREATE TABLE, AUTO_INCREMENT, PRIMARY KEY og FOREIGN KEY.
 
 **Hvorfor Raspberry Pi:**
 En ekte server som kjører en databasetjeneste – dette er reell drift, ikke bare teori.
@@ -120,12 +106,11 @@ I et ekte produksjonsmiljø ville en Raspberry Pi ikke vært rask nok til mange 
   - **Open list** – ruter algoritmen ennå ikke har utforsket, men vurderer
   - **Closed list** – ruter algoritmen allerede har sjekket og er ferdig med
   - **Heuristikk** – et estimat på hvor langt det er igjen til målet, brukes til å prioritere hvilken rute som utforskes først
-
-- Fienden oppdaterer path kontinuerlig mot spillerens posisjon
+- Fienden vet alltid hvor spilleren er og oppdaterer path hvert sekund – alltid i jakt-modus
 - MAZE_Development Workspace med Kanban-board – tracker oppgaver og committer til GitHub underveis
   Kanban er en metode der oppgaver flyttes mellom kolonner som "To Do", "In Progress" og "Done" – gir oversikt over arbeidsprosessen.
 - MySQL tabeller: users (brukernavn + hashet passord), progress (nivå, poeng)
-- Passord hashes med bcrypt før lagring – kan ikke reverseres
+- Passord hashes med bcrypt + salt før lagring – kan ikke reverseres
 
 ### Hvorfor
 - A* fordi det er raskere og smartere enn BFS
@@ -135,14 +120,13 @@ I et ekte produksjonsmiljø ville en Raspberry Pi ikke vært rask nok til mange 
 - Raspberry Pi fordi det er en ekte driftsoppgave – ikke bare lokalt på maskinen
 
 ### Alternativer jeg vurderte
-- NavigationMesh – Godots innebygde system. Fungerer, men er en black box jeg ikke kan forklare innmaten på
-  NavigationMesh baker en walkable overflate automatisk, men all logikken skjer skjult. 
-  Det er en enklere algoritme som utforsker alle ruter likt i alle retninger uten å prioritere
+- NavigationMesh – Godots innebygde system. Fungerer, men er en black box jeg ikke kan forklare innmaten på.
+  NavigationMesh baker en walkable overflate automatisk, men all logikken skjer skjult. Jeg kan ikke forklare hva som skjer steg for steg.
 - Lokal fillagring – ikke skalerbart, fungerer ikke fra annet sted
 - SQLite – enklere å sette opp, men ikke en ekte server/tjeneste, og gir ikke reell driftserfaring
 
 ### Etikk og sikkerhet
-- Passord lagres hashet med bcrypt, ikke i klartekst – selv om databasen hackes kan ikke passord leses
+- Passord lagres hashet med bcrypt + salt, ikke i klartekst – selv om databasen hackes kan ikke passord leses
 - Personvern – kun nødvendig data lagres (brukernavn, hashet passord, progress)
 - GDPR er relevant fordi brukere har rett til å be om at dataene deres slettes, og rett til å få utlevert all data lagret om dem. Siden passord er hashet kan vi ikke levere ut passordet i klartekst – det er nettopp poenget. Vi lagrer heller ikke mer data enn nødvendig.
 
@@ -157,7 +141,7 @@ I et ekte produksjonsmiljø ville en Raspberry Pi ikke vært rask nok til mange 
 | IT-støtte og kommunikasjon | Spillet gir spilleren tydelig feedback og brukeropplevelse. Koden er kommentert med forklaringer på hva hver del gjør, slik at andre kan lese og forstå den |
 | Driftstøtte | MySQL på Raspberry Pi – setter opp og konfigurerer en databasetjeneste på en fysisk server |
 | Etikk, lovverk og yrkesutøvelse | Personvern, GDPR, sikker lagring av brukerdata med hashing |
-| Informasjonssikkerhet | Hashede passord med bcrypt, sikker databasetilkobling, tjeneste for å be om alle data, og å bli slettet |
+| Informasjonssikkerhet | Hashede passord med bcrypt + salt, sikker databasetilkobling, tjeneste for å be om alle data og å bli slettet |
 
 ---
 
@@ -165,4 +149,4 @@ I et ekte produksjonsmiljø ville en Raspberry Pi ikke vært rask nok til mange 
 - Synsfelt (line of sight) for fienden
 - Lydeffekter når fienden oppdager spilleren
 - Login-skjerm i spillet koblet til databasen
-- Tjeneste for å be om sine egne brukerdata, eller å få slettet alle data som er lagret om seg selv.
+- Tjeneste for å be om sine egne brukerdata, eller å få slettet alle data som er lagret om seg selv
