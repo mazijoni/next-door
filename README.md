@@ -7,7 +7,7 @@
 Jeg skal lage deler av et 3D spill i Godot 4.6 der spilleren sniker seg inn i et hus.
 Hovedfokuset på eksamensdagen er å implementere et egenutviklet pathfinding-system til en AI-fiende, slik at den beveger seg naturlig rundt vegger og hindringer.
 
-* [x] TODO: Forklar hva et pathfinding-system er for noe
+* [ ] TODO: Forklar hva et pathfinding-system er for noe
 
 Jeg har allerede laget grunnleggende spillerbevegelse tidligere og en fiende fra forberedelsestiden.
 Prosjektet er versjonskontrollert med Git og hostet på GitHub under **MAZE_Development**. Endringer etter dagen blir lagt in som en ny commit.
