@@ -52,7 +52,7 @@ Den nåværende løsningen er ikke intelligent – fienden setter seg fast i veg
 ### 2. Fiendeatferd
 
 Koble pathfindingen til fiendeatferd – fienden patruljerer eller jager spilleren basert på posisjon og synsfelt.
-- [] TODO: Hva mener du med fiendeadferd? Noen setninger mer utfyllende om logikken som skal brukes. 
+- [ ] TODO: Hva mener du med fiendeadferd? Noen setninger mer utfyllende om logikken som skal brukes. 
 
 ### 3. Versjonskontroll med MAZE_Development Workspace
 
@@ -62,7 +62,7 @@ Kode committes underveis på eksamensdagen – dette viser arbeidsprosessen og g
 
 ### 4. MySQL-database på Raspberry Pi
 
-- [] TODO: Du MÅ få tid til å sette opp database, og tabellene. Det er en del av drifts-delen. Integreringen kan du sette på som HVIS TID
+- [ ] TODO: Du MÅ få tid til å sette opp database, og tabellene. Det er en del av drifts-delen. Integreringen kan du sette på som HVIS TID
 
 Sette opp MySQL på en Raspberry Pi som kjører som lokal server.
 Lage tabeller for å lagre brukerdata og spillprogress.
@@ -72,11 +72,11 @@ Lage tabeller for å lagre brukerdata og spillprogress.
 **Om hashing av passord:**
 Passord skal aldri lagres i klartekst i en database. Istedenfor brukes en hashing-algoritme som gjør passordet om til en fast streng med tegn som ikke kan reverseres tilbake til det originale passordet. Selv om databasen blir hacket, kan angriperen ikke lese passordene.
 
-- [] TODO: Teksten under virker kopiert. Vet du hva SALT er? Isåfall noter et par stikkord på hva det er så du kan svare
+- [ ] TODO: Teksten under virker kopiert. Vet du hva SALT er? Isåfall noter et par stikkord på hva det er så du kan svare
 
 Jeg bruker bcrypt – en anerkjent hashing-algoritme designet spesielt for passord. bcrypt legger til en tilfeldig "salt" for hvert passord før hashing, slik at to like passord aldri får samme hash. Dette beskytter mot rainbow table-angrep (forhåndsberegnede lister med vanlige passord og deres hashes).
 
-- [] TODO: Sjekk hvordan du oppretter tabell. Bør vel ikke stå slik som dette. Kan du ikke slette det hvis du har sjekket det ut, og vet hvordan du gjør det?
+- [ ] TODO: Sjekk hvordan du oppretter tabell. Bør vel ikke stå slik som dette. Kan du ikke slette det hvis du har sjekket det ut, og vet hvordan du gjør det?
 
 ```sql
 CREATE TABLE users (
