@@ -5,6 +5,10 @@ extends Item
 
 var _bracing_door: Node3D = null
 
+func _ready() -> void:
+	super._ready()
+	add_to_group("chair")
+
 func can_pick_up() -> bool:
 	return _bracing_door == null
 

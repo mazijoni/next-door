@@ -27,6 +27,7 @@ folder_colors={
 "res://Material/white/": "gray",
 "res://assets/": "blue",
 "res://assets/textures/": "orange",
+"res://audio/": "yellow",
 "res://scenes/": "red",
 "res://scripts/": "purple"
 }

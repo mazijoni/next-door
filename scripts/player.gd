@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody3D
 
+signal footstep_made(position: Vector3, loud: bool)
+
 const WALK_SPEED := 4.0
 const SPRINT_SPEED := 8.0
 const SNEAK_SPEED := 1.5
@@ -53,7 +55,13 @@ var _climb_exit: Vector3
 var _rmb_held_time := 0.0
 var _rmb_pressed := false
 var _spawn_position: Vector3
-var _dead := false
+var _dead       := false
+var _bob_t      := 0.0
+var _bob_amp    := 0.0
+
+var _footstep_player: AudioStreamPlayer
+var _footstep_sounds: Array = []
+var _footstep_timer := 0.0
 
 @onready var _slot_panels: Array[Panel] = [
 	$HUD/InventoryBar/Slot0,
@@ -69,6 +77,8 @@ var _dead := false
 ]
 
 func _ready() -> void:
+	floor_snap_length = 0.4
+	floor_max_angle   = deg_to_rad(55.0)
 	add_to_group("player")
 	_spawn_position = global_position
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -76,6 +86,13 @@ func _ready() -> void:
 	ray.collide_with_areas = true
 	ceiling_ray.add_exception(self)
 	_update_inventory_hud()
+	_footstep_player = AudioStreamPlayer.new()
+	_footstep_player.volume_db = -8.0
+	add_child(_footstep_player)
+	for i in range(1, 22):
+		var s: AudioStream = load("res://audio/FootSteps/Wood/Steps_wood-%03d.ogg" % i)
+		if s:
+			_footstep_sounds.append(s)
 
 func _update_inventory_hud() -> void:
 	for i in SLOT_COUNT:
@@ -272,9 +289,36 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0.0, speed)
 
 	move_and_slide()
+	_update_bob(delta)
+	_update_footsteps(delta, sneaking or ceiling_blocked, sprinting)
 
 	if global_position.y < -10.0:
 		die()
+
+func _update_bob(delta: float) -> void:
+	var h_speed := Vector2(velocity.x, velocity.z).length()
+	# Steeper floor normal = stairs/ramp → more pronounced bob at higher rate.
+	var on_slope := is_on_floor() and get_floor_normal().y < 0.97
+	if is_on_floor() and h_speed > 0.5 and not _hiding_spot:
+		_bob_t   += delta * h_speed * (1.8 if on_slope else 1.1)
+		var amp   := 0.055 if on_slope else 0.022
+		_bob_amp  = lerpf(_bob_amp, amp, delta * 14.0)
+	else:
+		_bob_amp  = lerpf(_bob_amp, 0.0, delta * 8.0)
+
+func _update_footsteps(delta: float, crouching: bool, sprinting: bool) -> void:
+	var h_speed := Vector2(velocity.x, velocity.z).length()
+	if crouching or not is_on_floor() or h_speed < 0.5 or _footstep_sounds.is_empty():
+		_footstep_timer = 0.0
+		return
+	var interval: float = clamp(0.55 * (WALK_SPEED / h_speed), 0.27, 0.65)
+	_footstep_timer += delta
+	if _footstep_timer >= interval:
+		_footstep_timer = 0.0
+		_footstep_player.stream = _footstep_sounds[randi() % _footstep_sounds.size()]
+		_footstep_player.pitch_scale = randf_range(0.9, 1.1)
+		_footstep_player.play()
+		emit_signal("footstep_made", global_position, sprinting)
 
 func die(killer_pos := Vector3.ZERO) -> void:
 	if _dead:
@@ -436,7 +480,8 @@ func _update_body_shape(posture: HidingSpot.Type, delta: float) -> void:
 			target_cam_y = CRAWL_CAM_Y
 			target_col_height = CRAWL_COL_HEIGHT
 			target_col_y = CRAWL_COL_Y
-	head.position.y = lerpf(head.position.y, target_cam_y, delta * 10.0)
+	var bob := sin(_bob_t * TAU) * _bob_amp
+	head.position.y = lerpf(head.position.y, target_cam_y + bob, delta * 10.0)
 	var capsule := collision.shape as CapsuleShape3D
 	capsule.height = lerpf(capsule.height, target_col_height, delta * 10.0)
 	collision.position.y = lerpf(collision.position.y, target_col_y, delta * 10.0)

@@ -79,10 +79,15 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot0" unique_id=333333330]
-layout_mode = 0
+[node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot0" unique_id=55372156]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -94,10 +99,15 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot1" unique_id=333333331]
-layout_mode = 0
+[node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot1" unique_id=361218039]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -109,10 +119,15 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot2" unique_id=333333332]
-layout_mode = 0
+[node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot2" unique_id=1586456315]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -125,9 +140,14 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="Icon" type="TextureRect" parent="HUD/InventoryBar/Slot3" unique_id=333333333]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
