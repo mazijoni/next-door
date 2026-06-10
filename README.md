@@ -5,16 +5,11 @@
 ## Modes
 
 - Idle
-	-
 	
 - Suspicious
-	-
 	
 - Searching
-	-
 	
 - Hunting
-	-
 	
 - Chasing
-	-
